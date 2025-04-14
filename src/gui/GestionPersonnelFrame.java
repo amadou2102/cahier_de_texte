@@ -25,12 +25,12 @@ public class GestionPersonnelFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
 
         JButton ajouterProfBtn = new JButton("Ajouter un Professeur");
-        ajouterProfBtn.addActionListener(e -> new ProfesseurFrame().setVisible(true));
+        ajouterProfBtn.addActionListener(e -> new ProfesseurFrame(this).setVisible(true));
 
         JButton ajouterRespBtn = new JButton("Ajouter un Responsable");
         JButton supprimerBtn = new JButton("Supprimer le compte sélectionné");
 
-        ajouterProfBtn.addActionListener(e -> new ProfesseurFrame().setVisible(true));
+        ajouterProfBtn.addActionListener(e -> new ProfesseurFrame(this).setVisible(true));
         ajouterRespBtn.addActionListener(e -> new ResponsableFrame().setVisible(true));
         supprimerBtn.addActionListener(e -> supprimerCompte());
 

@@ -11,6 +11,7 @@ public class Basedonnee {
 
     private static Connection connection;
 
+
     public static Connection getConnection() {
         if (connection == null) {
             try {

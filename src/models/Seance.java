@@ -7,6 +7,7 @@ public class Seance {
         private String dateSeance;
         private int idCours;
         private String etat; // ✅ État de validation
+        private String nomCours;
 
                 public Seance() {
         }
@@ -29,4 +30,8 @@ public class Seance {
 
         public String getEtat() { return etat; }
         public void setEtat(String etat) { this.etat = etat; }
+
+
+        public String getNomCours() { return nomCours; }
+        public void setNomCours(String nomCours) { this.nomCours = nomCours; }
 }

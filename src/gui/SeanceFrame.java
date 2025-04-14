@@ -4,14 +4,15 @@ package gui;
 import dao.SeanceDao;
 import models.Seance;
 
+
 import javax.swing.*;
-        import java.awt.*;
+import java.awt.*;
 
 public class SeanceFrame extends JFrame {
 
     private JTextField dateField;
     private JTextField dureeField;
-    private JTextField matiereField;
+
     private JTextArea contenuArea;
     private JButton ajouterButton;
 
@@ -35,10 +36,6 @@ public class SeanceFrame extends JFrame {
         dureeField = new JTextField();
         panel.add(dureeField);
 
-        // Matière (temporaire)
-        panel.add(new JLabel("Matière :"));
-        matiereField = new JTextField();
-        panel.add(matiereField);
 
         // Contenu
         panel.add(new JLabel("Contenu de la séance :"));
@@ -50,18 +47,18 @@ public class SeanceFrame extends JFrame {
         ajouterButton = new JButton("Ajouter");
         panel.add(ajouterButton);
 
-        // 🎯 Action du bouton
+        // Action du bouton
         ajouterButton.addActionListener(e -> {
             String date = dateField.getText();
             String duree = dureeField.getText();
             String contenu = contenuArea.getText();
-            String matiere = matiereField.getText();
+
 
 
             // Id du cours à remplacer plus tard dynamiquement
             int idCours = 1;
 
-            if (date.isEmpty() || duree.isEmpty() || contenu.isEmpty() || matiere.isEmpty()) {
+            if (date.isEmpty() || duree.isEmpty() || contenu.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 return;
             }

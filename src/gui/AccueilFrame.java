@@ -3,8 +3,6 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AccueilFrame extends JFrame {
 
@@ -25,8 +23,10 @@ public class AccueilFrame extends JFrame {
 
         switch (role.toLowerCase()) {
             case "professeur":
-                buttonPanel.add(new JButton("Ajouter une séance"));
-                buttonPanel.add(new JButton("Voir mes cours"));
+
+                JButton btnVoirMesCours = new JButton("Voir mes cours");
+                btnVoirMesCours.addActionListener(e -> new MesCoursFrame(idProfesseur).setVisible(true));
+                buttonPanel.add(btnVoirMesCours);
 
                 //mettre en action le bouton ajouter une seance
                 JButton ajouterSeanceButton = new JButton("Ajouter une séance");
@@ -37,21 +37,28 @@ public class AccueilFrame extends JFrame {
                 });
 
                 buttonPanel.add(ajouterSeanceButton);
+
+                //voir la liste des seance ajouté
+                JButton btnVoirMesSeances = new JButton("Voir mes séances");
+                btnVoirMesSeances.addActionListener(e -> new MesSeancesFrame(idProfesseur).setVisible(true));
+                buttonPanel.add(btnVoirMesSeances);
                 break;
             case "responsable":
                 JButton btnValider = new JButton("Valider les séances");
                 btnValider.addActionListener(e -> new ValidationSeanceFrame().setVisible(true));
                 buttonPanel.add(btnValider);
 
-                JButton btnVoirCahiers = new JButton("Voir les cahiers de texte");
-                buttonPanel.add(btnVoirCahiers); // à connecter plus tard
+
+                JButton btnVoirCahierTexte = new JButton("Voir le cahier de texte");
+                btnVoirCahierTexte.addActionListener(e -> new VoirCahierTexteFrame().setVisible(true));
+                buttonPanel.add(btnVoirCahierTexte);
 
 
                 break;
             case "chef de département":
                 // 🔹 Bouton : Gérer les professeurs
                 JButton btnGererProfs = new JButton("Gérer les Professeurs");
-                btnGererProfs.addActionListener(e -> new ProfesseurFrame().setVisible(true));
+                btnGererProfs.addActionListener(e -> new GestionPersonnelFrame().setVisible(true));
                 buttonPanel.add(btnGererProfs);
 
                 // 🔹 Bouton : Gérer les responsables

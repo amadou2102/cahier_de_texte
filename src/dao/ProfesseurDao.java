@@ -40,7 +40,7 @@ public class ProfesseurDao {
     public static boolean ajouterProfesseur(String nom, String prenom, String email, String password) {
         try (Connection con = Basedonnee.getConnection()) {
             // 1. Insérer dans Utilisateurs
-            String insertUser = "INSERT INTO Utilisateurs (nomUtilisateur, prenomUtilisateur, email, motDePasse, role) VALUES (?, ?, ?, ?, 'Professeur')";
+            String insertUser = "INSERT INTO Utilisateurs (nom, prenom, email,password, role) VALUES (?, ?, ?, ?, 'Professeur')";
             PreparedStatement pstUser = con.prepareStatement(insertUser, PreparedStatement.RETURN_GENERATED_KEYS);
             pstUser.setString(1, nom);
             pstUser.setString(2, prenom);
@@ -72,7 +72,7 @@ public class ProfesseurDao {
         List<models.Professeur> profs = new ArrayList<>();
 
         String sql = """
-        SELECT p.idProfesseur, u.nomUtilisateur, u.prenomUtilisateur, u.email
+        SELECT p.idProfesseur, u.nom, u.prenom, u.email
         FROM Professeur p
         JOIN Utilisateurs u ON p.idUtilisateurs = u.idUtilisateurs
     """;
@@ -84,8 +84,8 @@ public class ProfesseurDao {
             while (rs.next()) {
                 profs.add(new models.Professeur(
                         rs.getInt("idProfesseur"),
-                        rs.getString("nomUtilisateur"),
-                        rs.getString("prenomUtilisateur"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
                         rs.getString("email")
                 ));
             }

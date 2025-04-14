@@ -58,6 +58,31 @@ public class coursDao {
             return false;
         }
     }
+//permettre aux prof de voir leurs cours
+    public static List<Cours> getCoursParProfesseur(int idProfesseur) {
+        List<Cours> coursList = new ArrayList<>();
+        String sql = "SELECT idCours, nomCours FROM Cours WHERE idProfesseur = ?";
+
+        try (Connection con = Basedonnee.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setInt(1, idProfesseur);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Cours cours = new Cours(
+                        rs.getInt("idCours"),
+                        rs.getString("nomCours")
+                );
+                coursList.add(cours);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return coursList;
+    }
 
 
 }

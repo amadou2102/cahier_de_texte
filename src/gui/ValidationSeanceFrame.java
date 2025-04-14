@@ -58,7 +58,7 @@ public class ValidationSeanceFrame extends JFrame {
 
         int idSeance = (int) model.getValueAt(selected, 0);
 
-        boolean success = SeanceDao.ajouterSeance(idSeance);
+        boolean success = SeanceDao.validerSeance(idSeance);;
         if (success) {
             JOptionPane.showMessageDialog(this, "✅ Séance validée !");
             chargerSeances();

@@ -13,7 +13,7 @@ public class ProfesseurFrame extends JFrame {
     private JTextField emailField;
     private JPasswordField passwordField;
 
-    public ProfesseurFrame() {
+    public ProfesseurFrame(GestionPersonnelFrame parent) {
         this.parent = parent;
         setTitle("Ajouter un Professeur");
         setSize(350, 300);

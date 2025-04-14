@@ -1,3 +1,4 @@
+-- Active: 1737733583568@@127.0.0.1@3306@cahier_de_texte
 CREATE DATABASE CAHIERTEXTE1;
 USE CAHIERTEXTE1;
 
@@ -6,11 +7,11 @@ USE CAHIERTEXTE1;
 CREATE TABLE IF NOT EXISTS `Utilisateurs`
 (
     `idUtilisateurs` INT NOT NULL AUTO_INCREMENT,
-    `nomUtilisateur` VARCHAR(45) NOT NULL,
-    `prenomUtilisateur` VARCHAR(45) NOT NULL,
-    `emailUtilisateur` VARCHAR(45) NOT NULL UNIQUE ,
-    `passwordUtilisateur` VARCHAR(45) NOT NULL,
-    `roleUtilisateur` ENUM('Chef_departement','Professeur','Responsable') NOT NULL,
+    `nom` VARCHAR(45) NOT NULL,
+    `prenom` VARCHAR(45) NOT NULL,
+    `email` VARCHAR(45) NOT NULL UNIQUE ,
+    `password` VARCHAR(45) NOT NULL,
+    `role` ENUM('Chef_departement','Professeur','Responsable') NOT NULL,
     PRIMARY KEY (`idUtilisateurs`)
 );
 
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `Professeur`
 
 CREATE TABLE IF NOT EXISTS `Cours`
 (
-    `idCours` INT NOT NULL AUTO_INCREMENT,`Nom_du_cours` VARCHAR(45) NOT NULL,
+    `idCours` INT NOT NULL AUTO_INCREMENT,
     `nomCours` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idCours`)
 );
