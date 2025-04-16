@@ -33,4 +33,11 @@ public class ClasseDAO {
 
         return classes;
     }
+
+    /*public static void main(String[] args) {
+        List<Classe> classes = ClasseDAO.getAllClasses();
+        for (Classe c : classes) {
+            System.out.println("✔ Classe : " + c.getNomClasse());
+        }
+    }*/
 }

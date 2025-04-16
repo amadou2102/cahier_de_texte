@@ -1,4 +1,4 @@
-package utils;
+/*package utils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,4 +48,4 @@ public class accesBase {
         }
 }
 
-
+*/

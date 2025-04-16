@@ -10,6 +10,26 @@ import java.util.List;
 public class SeanceDao {
 
     // ✅ Ajout d'une séance
+    public static boolean ajouterSeance(String nomSeance, String date, String contenu, int idCours) {
+        String sql = "INSERT INTO Seance (nomSeance, contenueSeance, dateSeance, idCours) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = Basedonnee.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, nomSeance);
+            stmt.setString(2, contenu);
+            stmt.setString(3, date);
+            stmt.setInt(4, idCours);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de l'ajout de la séance : " + e.getMessage());
+            return false;
+        }
+    }
+
+    /*
     public static boolean ajouterSeance(String date, String duree, String contenu, int idCours) {
         String sql = "INSERT INTO Seance (dateSeance, dureeSeance, contenueSeance, idCours, etat) VALUES (?, ?, ?, ?, ?)";
 
@@ -28,7 +48,7 @@ public class SeanceDao {
             System.err.println("❌ Erreur lors de l'ajout de la séance : " + e.getMessage());
             return false;
         }
-    }
+    }*/
 
     // ✅ Récupérer les séances non validées
     public static List<Seance> getSeancesNonValidees() {
@@ -150,6 +170,38 @@ public class SeanceDao {
         return seances;
     }
 
+    public static List<Seance> getSeancesParCours(int idCours) {
+        List<Seance> seances = new ArrayList<>();
+        Connection con = Basedonnee.getConnection();
+
+        String sql = """
+        SELECT s.idSeance, s.dateSeance, s.dureeSeance, s.contenueSeance, s.etat, c.nomCours
+        FROM Seance s
+        JOIN Cours c ON s.idCours = c.idCours
+        WHERE s.idCours = ?
+    """;
+
+        try (PreparedStatement pst = con.prepareStatement(sql)) {
+            pst.setInt(1, idCours);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Seance s = new Seance();
+                s.setIdSeance(rs.getInt("idSeance"));
+                s.setDateSeance(rs.getString("dateSeance"));
+                s.setDureeSeance(rs.getString("dureeSeance"));
+                s.setContenueSeance(rs.getString("contenueSeance"));
+                s.setEtat(rs.getString("etat"));
+                s.setNomCours(rs.getString("nomCours"));
+                seances.add(s);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return seances;
+    }
 
 
 }

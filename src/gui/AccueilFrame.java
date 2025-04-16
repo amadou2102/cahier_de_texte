@@ -10,7 +10,7 @@ public class AccueilFrame extends JFrame {
         setTitle("Accueil - " + role);
         setSize(400, 300);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JLabel label = new JLabel("Bienvenue " + nomUtilisateur + " (" + role + ")");
         label.setFont(new Font("Arial", Font.BOLD, 16));
@@ -32,8 +32,9 @@ public class AccueilFrame extends JFrame {
                 JButton ajouterSeanceButton = new JButton("Ajouter une séance");
 
                 ajouterSeanceButton.addActionListener(e -> {
-                    SeanceFrame frame = new SeanceFrame();
+                    SeanceFrame frame = new SeanceFrame(idProfesseur);
                     frame.setVisible(true);
+
                 });
 
                 buttonPanel.add(ajouterSeanceButton);
@@ -49,9 +50,16 @@ public class AccueilFrame extends JFrame {
                 buttonPanel.add(btnValider);
 
 
-                JButton btnVoirCahierTexte = new JButton("Voir le cahier de texte");
-                btnVoirCahierTexte.addActionListener(e -> new VoirCahierTexteFrame().setVisible(true));
-                buttonPanel.add(btnVoirCahierTexte);
+                JButton btnCahierTexte = new JButton("Voir cahier de texte");
+                btnCahierTexte.addActionListener(e -> new VoirCahierTexteFrame().setVisible(true));
+                buttonPanel.add(btnCahierTexte);
+
+
+
+                JButton btnVoirSeances = new JButton("Voir les séances par cours");
+                btnVoirSeances.addActionListener(e -> new VoirSeancesParCoursFrame().setVisible(true));
+                buttonPanel.add(btnVoirSeances);
+
 
 
                 break;
@@ -63,11 +71,22 @@ public class AccueilFrame extends JFrame {
 
                 // 🔹 Bouton : Gérer les responsables
                 JButton btnGererResponsables = new JButton("Gérer les Responsables");
-                btnGererResponsables.addActionListener(e -> new ResponsableFrame().setVisible(true));
+                btnGererResponsables.addActionListener(e -> new GestionPersonnelFrame().setVisible(true));
                 buttonPanel.add(btnGererResponsables);
 
+                JButton btnVoirSeancesCours = new JButton("Voir les séances par cours");
+                btnVoirSeancesCours.addActionListener(e -> new VoirSeancesParCoursFrame().setVisible(true));
+                buttonPanel.add(btnVoirSeancesCours);
+
+
+                JButton btnAffecterCours = new JButton("Affecter les cours");
+                btnAffecterCours.addActionListener(e -> new AffecterCoursFrame().setVisible(true));
+                buttonPanel.add(btnAffecterCours);
+
+
+
                 buttonPanel.add(new JButton("Générer les fiches PDF"));
-                buttonPanel.add(new JButton("Affecter les cours"));
+
 
                 break;
             default:

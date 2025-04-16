@@ -18,4 +18,10 @@ public class Responsable {
     public String getNom() { return nom; }
     public String getPrenom() { return prenom; }
     public String getEmail() { return email; }
+
+    @Override
+    public String toString() {
+        return nom + " " + prenom; // ou juste nom
+    }
+
 }

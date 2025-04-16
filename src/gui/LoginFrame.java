@@ -14,7 +14,7 @@ public class LoginFrame extends JFrame {
     public LoginFrame() {
         setTitle("Connexion au Cahier de Texte");
         setSize(400, 600); //la taille de l interface
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -72,7 +72,40 @@ public class LoginFrame extends JFrame {
      * Méthode appelée lors du clic sur "Se connecter".
      * Gère la validation des champs et l'ouverture de la fenêtre d'accueil.
      */
-    private void afficherMessage() {  // actionPerformed équivalent :contentReference[oaicite:1]{index=1}
+
+    private void afficherMessage() {
+        String email = emailField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
+        String role = (String) roleCombo.getSelectedItem();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            statusLabel.setText("Veuillez remplir tous les champs.");
+            statusLabel.setForeground(Color.RED);
+            return;
+        }
+
+        boolean isValid = dao.UtilisateurDAO.verifierConnexion(email, password, role);
+
+        if (isValid) {
+            statusLabel.setText("Connexion réussie !");
+            statusLabel.setForeground(Color.GREEN);
+            dispose();
+
+            // Si Professeur → récupérer l’ID depuis la base
+            if (role.equalsIgnoreCase("Professeur")) {
+                int idProfesseur = dao.ProfesseurDao.getIdParEmail(email);
+                new AccueilFrame(role, email, idProfesseur).setVisible(true);
+            } else {
+                new AccueilFrame(role, email, -1).setVisible(true);
+            }
+        } else {
+            statusLabel.setText("Email, mot de passe ou rôle incorrect !");
+            statusLabel.setForeground(Color.RED);
+        }
+    }
+
+
+   /* private void afficherMessage() {  // actionPerformed équivalent :contentReference[oaicite:1]{index=1}
         String email = emailField.getText();
         String motDePasse = new String(passwordField.getPassword());
         String role = (String) roleCombo.getSelectedItem();
@@ -95,8 +128,7 @@ public class LoginFrame extends JFrame {
             }
         }
     }
+*/
 
-    public void addLoginListener() {
-    }
 }
 

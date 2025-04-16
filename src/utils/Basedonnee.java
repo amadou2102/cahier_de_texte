@@ -9,7 +9,7 @@ public class Basedonnee {
     private static final String USER = "root";
     private static final String PASSWORD = ""; // Mets ton mot de passe MySQL ici
 
-    private static Connection connection;
+    /*
 
 
     public static Connection getConnection() {
@@ -17,10 +17,21 @@ public class Basedonnee {
             try {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 System.out.println("✅ Connexion réussie à la base de données.");
+
             } catch (SQLException e) {
                 System.err.println("❌ Erreur de connexion : " + e.getMessage());
             }
         }
         return connection;
+    }*/
+
+    public static Connection getConnection() {
+        try {
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur de connexion : " + e.getMessage());
+            return null;
+        }
     }
+
 }

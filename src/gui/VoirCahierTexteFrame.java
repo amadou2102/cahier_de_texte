@@ -22,7 +22,7 @@ public class VoirCahierTexteFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // 🔹 Haut : choix de la classe
+        //  Haut : choix de la classe
         JPanel topPanel = new JPanel();
         classeCombo = new JComboBox<>();
         chargerClasses();
@@ -33,7 +33,7 @@ public class VoirCahierTexteFrame extends JFrame {
         topPanel.add(btnRechercher);
         add(topPanel, BorderLayout.NORTH);
 
-        // 🔹 Tableau
+        // Tableau
         model = new DefaultTableModel(new String[]{"Date", "Durée", "Contenu", "Cours"}, 0);
         table = new JTable(model);
         add(new JScrollPane(table), BorderLayout.CENTER);

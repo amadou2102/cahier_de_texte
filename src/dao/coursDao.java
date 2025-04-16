@@ -85,4 +85,28 @@ public class coursDao {
     }
 
 
+    public static List<Cours> getAllCours() {
+        List<Cours> coursList = new ArrayList<>();
+        String sql = "SELECT idCours, nomCours FROM Cours";
+
+        try (Connection con = Basedonnee.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Cours cours = new Cours(
+                        rs.getInt("idCours"),
+                        rs.getString("nomCours")
+                );
+                coursList.add(cours);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return coursList;
+    }
+
+
 }
