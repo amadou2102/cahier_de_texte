@@ -47,7 +47,7 @@ public class LoginFrame extends JFrame {
                 "Professeur",
                 "Chef de département"
         });
-        panel.add(roleCombo);
+        panel.add(roleCombo); 
 
 
         JButton loginButton = new JButton("Se connecter");
