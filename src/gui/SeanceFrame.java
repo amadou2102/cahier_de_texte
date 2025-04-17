@@ -98,26 +98,20 @@ public class SeanceFrame extends JFrame {
             String duree = dureeField.getText().trim();
             String contenu = contenuArea.getText().trim();
 
-            Cours cours = (Cours) coursCombo.getSelectedItem();
-            if (cours == null) {
-                JOptionPane.showMessageDialog(this, "Aucun cours sélectionné !");
+            Cours coursSelectionne = (Cours) coursCombo.getSelectedItem();
+            if (coursSelectionne == null) {
+                JOptionPane.showMessageDialog(this, "Veuillez sélectionner un cours !");
                 return;
             }
-            int idCours = cours.getIdCours();
 
+            int idCours = coursSelectionne.getIdCours();
 
-            if (date.isEmpty() || contenu.isEmpty()) {
+            if (date.isEmpty() || contenu.isEmpty() || duree.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            String nomSeance = JOptionPane.showInputDialog(this, "Entrez le nom de la séance :");
-            if (nomSeance == null || nomSeance.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Nom de séance requis !");
-                return;
-            }
-
-            boolean success = SeanceDao.ajouterSeance(nomSeance, date, contenu, idCours);
+            boolean success = SeanceDao.ajouterSeance(date, duree, contenu, idCours);
 
             if (success) {
                 JOptionPane.showMessageDialog(this, "✅ Séance ajoutée avec succès !");

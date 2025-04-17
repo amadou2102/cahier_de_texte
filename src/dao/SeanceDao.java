@@ -10,16 +10,17 @@ import java.util.List;
 public class SeanceDao {
 
     // ✅ Ajout d'une séance
-    public static boolean ajouterSeance(String nomSeance, String date, String contenu, int idCours) {
-        String sql = "INSERT INTO Seance (nomSeance, contenueSeance, dateSeance, idCours) VALUES (?, ?, ?, ?)";
+    public static boolean ajouterSeance(String date,String duree, String contenue, int idCours) {
+        String sql = "INSERT INTO Seance ( dateSeance, dureeseance, contenueSeance, idCours,etat) VALUES (?, ?, ?, ?,?)";
 
         try (Connection conn = Basedonnee.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, nomSeance);
-            stmt.setString(2, contenu);
-            stmt.setString(3, date);
+            stmt.setString(1, date);
+            stmt.setString(2,duree);
+            stmt.setString(3, contenue);
             stmt.setInt(4, idCours);
+            stmt.setString(5, "non validée");
 
             return stmt.executeUpdate() > 0;
 
