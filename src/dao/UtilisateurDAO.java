@@ -7,12 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UtilisateurDAO {
+    static Basedonnee bd = new Basedonnee();
 
     public static boolean verifierConnexion(String email, String password, String role) {
         String sql = "SELECT * FROM Utilisateurs WHERE email = ? AND password = ? AND role = ?";
 
         try (Connection con = Basedonnee.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+                PreparedStatement pst = con.prepareStatement(sql)) {
 
             pst.setString(1, email);
             pst.setString(2, password);

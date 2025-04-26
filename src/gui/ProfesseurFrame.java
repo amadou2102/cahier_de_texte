@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ProfesseurFrame extends JFrame {
-    private GestionPersonnelFrame parent;
+    private GestionPersonnelFrame parent; // Used to refresh personnel list after adding a professor
 
     private JTextField nomField;
     private JTextField prenomField;
     private JTextField emailField;
     private JPasswordField passwordField;
 
-   public ProfesseurFrame(GestionPersonnelFrame parent) {
+    public ProfesseurFrame(GestionPersonnelFrame parent) {
         this.parent = parent;
         setTitle("Ajouter un Professeur");
         setSize(350, 300);
@@ -51,7 +51,9 @@ public class ProfesseurFrame extends JFrame {
             boolean success = ProfesseurDao.ajouterProfesseur(nom, prenom, email, mdp);
             if (success) {
                 JOptionPane.showMessageDialog(this, "✅ Professeur ajouté !");
-                parent.chargerPersonnel(); // Rafraîchit la liste dans la fenêtre parent
+                if (parent != null) {
+                    parent.chargerPersonnel(); // Refreshes the personnel list in the parent frame
+                }
                 dispose(); // Fermer la fenêtre
             } else {
                 JOptionPane.showMessageDialog(this, "❌ Erreur lors de l’ajout.");
@@ -62,6 +64,4 @@ public class ProfesseurFrame extends JFrame {
         add(ajouterBtn);
     }
 
-
 }
-

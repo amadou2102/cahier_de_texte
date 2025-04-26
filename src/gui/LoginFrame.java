@@ -3,17 +3,15 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class LoginFrame extends JFrame {
     private JTextField emailField;
     private JPasswordField passwordField;
     private JComboBox<String> roleCombo;
     private JLabel statusLabel;
 
-
     public LoginFrame() {
         setTitle("Connexion au Cahier de Texte");
-        setSize(400, 600); //la taille de l interface
+        setSize(400, 600); // la taille de l interface
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -25,8 +23,6 @@ public class LoginFrame extends JFrame {
         Image img = logoIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         logoLabel.setIcon(new ImageIcon(img));
         add(logoLabel, BorderLayout.NORTH);
-
-
 
         // Panel principal
         JPanel panel = new JPanel(new GridLayout(4, 4, 10, 10));
@@ -45,15 +41,13 @@ public class LoginFrame extends JFrame {
         roleCombo = new JComboBox<>(new String[] {
                 "Responsable",
                 "Professeur",
-                "Chef de département"
+                "Chef_departement"
         });
-        panel.add(roleCombo); 
-
+        panel.add(roleCombo);
 
         JButton loginButton = new JButton("Se connecter");
         loginButton.addActionListener(e -> afficherMessage());
         panel.add(loginButton);
-
 
         panel.add(loginButton);
 
@@ -63,10 +57,9 @@ public class LoginFrame extends JFrame {
         add(panel, BorderLayout.CENTER);
     }
 
-    //pour les parametres de retour
+    // pour les parametres de retour
     public LoginFrame(String role, String email) {
     }
-
 
     /**
      * Méthode appelée lors du clic sur "Se connecter".
@@ -104,31 +97,31 @@ public class LoginFrame extends JFrame {
         }
     }
 
-
-   /* private void afficherMessage() {  // actionPerformed équivalent :contentReference[oaicite:1]{index=1}
-        String email = emailField.getText();
-        String motDePasse = new String(passwordField.getPassword());
-        String role = (String) roleCombo.getSelectedItem();
-
-        if (email.isEmpty() || motDePasse.isEmpty()) {
-            statusLabel.setText("Veuillez remplir tous les champs.");
-            statusLabel.setForeground(Color.RED);
-        } else {
-            statusLabel.setText("Connexion réussie !");
-            statusLabel.setForeground(Color.GREEN);
-            // Ferme la fenêtre de login et ouvre l'accueil
-            dispose();
-//permet de recuperer l id du prof
-            if (role.equalsIgnoreCase("Professeur")) {
-                int idProfesseur =1; // à récupérer selon le user
-                new AccueilFrame(role, email, idProfesseur).setVisible(true);
-            }
-            else {
-                new AccueilFrame(role, email, -1).setVisible(true);
-            }
-        }
-    }
-*/
+    /*
+     * private void afficherMessage() { // actionPerformed équivalent
+     * :contentReference[oaicite:1]{index=1}
+     * String email = emailField.getText();
+     * String motDePasse = new String(passwordField.getPassword());
+     * String role = (String) roleCombo.getSelectedItem();
+     * 
+     * if (email.isEmpty() || motDePasse.isEmpty()) {
+     * statusLabel.setText("Veuillez remplir tous les champs.");
+     * statusLabel.setForeground(Color.RED);
+     * } else {
+     * statusLabel.setText("Connexion réussie !");
+     * statusLabel.setForeground(Color.GREEN);
+     * // Ferme la fenêtre de login et ouvre l'accueil
+     * dispose();
+     * //permet de recuperer l id du prof
+     * if (role.equalsIgnoreCase("Professeur")) {
+     * int idProfesseur =1; // à récupérer selon le user
+     * new AccueilFrame(role, email, idProfesseur).setVisible(true);
+     * }
+     * else {
+     * new AccueilFrame(role, email, -1).setVisible(true);
+     * }
+     * }
+     * }
+     */
 
 }
-

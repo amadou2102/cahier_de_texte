@@ -4,8 +4,6 @@ package gui;
 import dao.SeanceDao;
 import dao.coursDao;
 import models.Cours;
-import models.Seance;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +16,6 @@ public class SeanceFrame extends JFrame {
     private JTextArea contenuArea;
     private JButton ajouterButton;
     private JComboBox<Cours> coursCombo;
-
 
     public SeanceFrame(int idProfesseur) {
         setTitle("Ajouter une Séance");
@@ -47,7 +44,6 @@ public class SeanceFrame extends JFrame {
         dureeField = new JTextField();
         panel.add(dureeField);
 
-
         // Contenu
         panel.add(new JLabel("Contenu de la séance :"));
         contenuArea = new JTextArea(3, 20);
@@ -59,39 +55,42 @@ public class SeanceFrame extends JFrame {
         panel.add(ajouterButton);
 
         // Action du bouton
-      /*  ajouterButton.addActionListener(e -> {
-            String date = dateField.getText();
-            String duree = dureeField.getText();
-            String contenu = contenuArea.getText();
-
-
-
-            // Id du cours à remplacer plus tard dynamiquement
-            int idCours = 1;
-
-            if (date.isEmpty() || duree.isEmpty() || contenu.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Création de l'objet séance
-            Seance seance = new Seance();
-
-            // Insertion via DAO
-            //SeanceDao dao = new SeanceDao();
-          //  boolean success = dao.Seance(seance);
-
-            if (success) {
-                JOptionPane.showMessageDialog(this, "✅ Séance ajoutée avec succès !");
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "❌ Échec de l'ajout de la séance.", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
-        add(panel, BorderLayout.CENTER);
-    }
-*/
+        /*
+         * ajouterButton.addActionListener(e -> {
+         * String date = dateField.getText();
+         * String duree = dureeField.getText();
+         * String contenu = contenuArea.getText();
+         * 
+         * 
+         * 
+         * // Id du cours à remplacer plus tard dynamiquement
+         * int idCours = 1;
+         * 
+         * if (date.isEmpty() || duree.isEmpty() || contenu.isEmpty()) {
+         * JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.",
+         * "Erreur", JOptionPane.ERROR_MESSAGE);
+         * return;
+         * }
+         * 
+         * // Création de l'objet séance
+         * Seance seance = new Seance();
+         * 
+         * // Insertion via DAO
+         * //SeanceDao dao = new SeanceDao();
+         * // boolean success = dao.Seance(seance);
+         * 
+         * if (success) {
+         * JOptionPane.showMessageDialog(this, "✅ Séance ajoutée avec succès !");
+         * dispose();
+         * } else {
+         * JOptionPane.showMessageDialog(this, "❌ Échec de l'ajout de la séance.",
+         * "Erreur", JOptionPane.ERROR_MESSAGE);
+         * }
+         * });
+         * 
+         * add(panel, BorderLayout.CENTER);
+         * }
+         */
 
         ajouterButton.addActionListener(e -> {
             String date = dateField.getText().trim();
@@ -107,7 +106,8 @@ public class SeanceFrame extends JFrame {
             int idCours = coursSelectionne.getIdCours();
 
             if (date.isEmpty() || contenu.isEmpty() || duree.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -117,15 +117,13 @@ public class SeanceFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "✅ Séance ajoutée avec succès !");
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "❌ Échec de l'ajout de la séance.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "❌ Échec de l'ajout de la séance.", "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
         add(panel, BorderLayout.CENTER);
 
-
     }
-
-
 
 }
