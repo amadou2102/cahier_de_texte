@@ -15,7 +15,6 @@ public class AccueilFrame extends JFrame {
         this.Utilisateur = Utilisateur;
         this.idProfesseur = idProfesseur;
 
-
         setTitle("Accueil - " + role);
         setSize(500, 400);
         setLocationRelativeTo(null);
