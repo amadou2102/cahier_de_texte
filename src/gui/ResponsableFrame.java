@@ -1,9 +1,10 @@
 package gui;
-/*
+
 import dao.ProfesseurDao;
 //import dao.ResponsableDAO;
 
 
+import dao.ResponsableDAO;
 import models.Classe;
 import models.Responsable;
 
@@ -72,6 +73,7 @@ public class ResponsableFrame extends JFrame {
         add(ajouterBtn);
 
     }
+}
 /*
         JComboBox<Responsable> comboUtilisateurs = new JComboBox<>();
         for (Responsable r : ResponsableDAO.listerUtilisateursNonResponsables()) {

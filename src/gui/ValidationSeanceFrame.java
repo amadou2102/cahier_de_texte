@@ -16,20 +16,40 @@ public class ValidationSeanceFrame extends JFrame {
 
     public ValidationSeanceFrame() {
         setTitle("Validation des séances");
-        setSize(700, 400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // MenuBar
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Options");
+        JMenuItem retourItem = new JMenuItem("🏠 Retour Accueil");
+        retourItem.addActionListener(e -> {
+            dispose();
+            new AccueilFrame("Responsable", "Moi", -1).setVisible(true);
+        });
+        JMenuItem deconnexionItem = new JMenuItem("🚪 Déconnexion");
+        deconnexionItem.addActionListener(e -> {
+            dispose();
+            new LoginFrame().setVisible(true);
+        });
+        menu.add(retourItem);
+        menu.add(deconnexionItem);
+        menuBar.add(menu);
+        setJMenuBar(menuBar);
+    //TABLE
         model = new DefaultTableModel(new String[]{"ID", "Date", "Durée", "Contenu", "État"}, 0);
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
+        // add(scrollPane, BorderLayout.CENTER);
 
         JButton validerBtn = new JButton("Valider la séance sélectionnée");
         validerBtn.addActionListener(e -> validerSeance());
 
         JPanel btnPanel = new JPanel();
         btnPanel.add(validerBtn);
+        add(new JLabel("Séances à valider :", JLabel.CENTER), BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
 
         chargerSeances();

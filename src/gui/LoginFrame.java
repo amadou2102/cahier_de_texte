@@ -22,40 +22,62 @@ public class LoginFrame extends JFrame {
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(JLabel.CENTER);
         ImageIcon logoIcon = new ImageIcon("image/Logo.jpg"); // ← chemin vers ton logo
-        Image img = logoIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        Image img = logoIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         logoLabel.setIcon(new ImageIcon(img));
         add(logoLabel, BorderLayout.NORTH);
 
 
 
         // Panel principal
-        JPanel panel = new JPanel(new GridLayout(4, 4, 10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(100, 15, 300, 40));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        //JPanel panel = new JPanel(new GridLayout(4, 4, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+        panel.setBackground(new Color(245, 250, 255)); // Bleu clair
+
+        JLabel title = new JLabel("Bienvenue !");
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setForeground(new Color(0, 102, 204));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(title);
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         panel.add(new JLabel("Email:"));
         emailField = new JTextField();
+        emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         panel.add(emailField);
 
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(new JLabel("Mot de passe:"));
         passwordField = new JPasswordField();
+        passwordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         panel.add(passwordField);
 
         // Rôle
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(new JLabel("Rôle:"));
         roleCombo = new JComboBox<>(new String[] {
                 "Responsable",
                 "Professeur",
-                "Chef de département"
+                "Chef_departement"
         });
-        panel.add(roleCombo); 
+        roleCombo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        panel.add(roleCombo);
 
 
+        panel.add(Box.createRigidArea(new Dimension(0, 20)));
         JButton loginButton = new JButton("Se connecter");
+        loginButton.setBackground(new Color(0, 153, 76));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
         loginButton.addActionListener(e -> afficherMessage());
         panel.add(loginButton);
 
+        loginButton.setFont(new Font("Arial", Font.BOLD, 16));
+
 
         panel.add(loginButton);
+
 
         statusLabel = new JLabel("");
         panel.add(statusLabel);
@@ -102,6 +124,13 @@ public class LoginFrame extends JFrame {
             statusLabel.setText("Email, mot de passe ou rôle incorrect !");
             statusLabel.setForeground(Color.RED);
         }
+
+        if (isValid) {
+            statusLabel.setText("Connexion réussie !");
+            statusLabel.setForeground(Color.GREEN);
+            dispose();
+
+
     }
 
 
@@ -130,5 +159,6 @@ public class LoginFrame extends JFrame {
     }
 */
 
+    }
 }
 

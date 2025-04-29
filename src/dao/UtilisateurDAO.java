@@ -26,4 +26,9 @@ public class UtilisateurDAO {
             return false;
         }
     }
+
+    public static int getIdParEmail(String email) {
+
+        return 0;
+    }
 }

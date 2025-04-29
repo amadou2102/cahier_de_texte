@@ -1,7 +1,7 @@
 package dao;
 
 
-/*
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,13 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import models.Professeur;
+import models.Responsable;
 import utils.Basedonnee;
 
 public class ResponsableDAO {
 
     public static int getIdParEmail(String email) {
-        int idProfesseur = -1;
+        int idResponsable = -1;
         Connection con = Basedonnee.getConnection();
 
         String sql = "SELECT p.idResponsable " +
@@ -28,18 +30,18 @@ public class ResponsableDAO {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                idProfesseur = rs.getInt("idProfesseur");
+                idResponsable = rs.getInt("idResponsable");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return idProfesseur;
+        return idResponsable;
     }
 
     // Ajouter un nouveau professeur
-    public static boolean ajouterProfesseur(String nom, String prenom, String email, String password) {
+    public static boolean ajouterResponsable(String nom, String prenom, String email, String password) {
         try (Connection con = Basedonnee.getConnection()) {
             // 1. Insérer dans Utilisateurs
             String insertUser = "INSERT INTO Utilisateurs (nom, prenom, email,password, role) VALUES (?, ?, ?, ?, 'Professeur')";
@@ -55,23 +57,23 @@ public class ResponsableDAO {
                 int idUtilisateur = rs.getInt(1);
 
                 // 2. Insérer dans Professeur
-                String insertProf = "INSERT INTO Professeur (idUtilisateurs) VALUES (?)";
-                PreparedStatement pstProf = con.prepareStatement(insertProf);
-                pstProf.setInt(1, idUtilisateur);
-                pstProf.executeUpdate();
+                String insertResp = "INSERT INTO Responsable (idUtilisateurs) VALUES (?)";
+                PreparedStatement pstResp = con.prepareStatement(insertResp);
+                pstResp.setInt(1, idUtilisateur);
+                pstResp.executeUpdate();
 
                 return true;
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Erreur ajout prof : " + e.getMessage());
+            System.err.println("❌ Erreur ajout RES: " + e.getMessage());
         }
         return false;
     }
 
     // Lister les professeurs
-    public static List<Professeur> listerProfesseurs() {
-        List<models.Professeur> profs = new ArrayList<>();
+    public static List<Responsable> listerResponsable() {
+        List<Responsable> Resp = new ArrayList<>();
 
         String sql = """
         SELECT p.idProfesseur, u.nom, u.prenom, u.email
@@ -84,8 +86,8 @@ public class ResponsableDAO {
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-                profs.add(new models.Professeur(
-                        rs.getInt("idProfesseur"),
+                Resp.add(new models.Responsable(
+                        rs.getInt("idResponsable"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("email")
@@ -96,7 +98,7 @@ public class ResponsableDAO {
             e.printStackTrace();
         }
 
-        return profs;
+        return Resp;
     }
 
     // Supprimer un professeur

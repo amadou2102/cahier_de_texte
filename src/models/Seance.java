@@ -8,6 +8,9 @@ public class Seance {
         private int idCours;
         private String etat; // ✅ État de validation
         private String nomCours;
+        private String role;
+        private String email;
+        private int idProfesseur;
 
                 public Seance() {
         }

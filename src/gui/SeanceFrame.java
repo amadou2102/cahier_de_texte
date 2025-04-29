@@ -19,6 +19,10 @@ public class SeanceFrame extends JFrame {
     private JButton ajouterButton;
     private JComboBox<Cours> coursCombo;
 
+    private String role;
+    private String email;
+    private int idProfesseur;
+
 
     public SeanceFrame(int idProfesseur) {
         setTitle("Ajouter une Séance");
@@ -121,10 +125,37 @@ public class SeanceFrame extends JFrame {
             }
         });
 
+
+        // 🔵 Retour bouton
+        JButton retourButton = new JButton("Retour");
+        panel.add(retourButton);
+
+        // 🔵 Action Retour
+        retourButton.addActionListener(e -> {
+            this.dispose();
+            new AccueilFrame(role, email, idProfesseur).setVisible(true);
+        });
+
         add(panel, BorderLayout.CENTER);
 
 
+
+
     }
+
+    public SeanceFrame(String role, String email, int idProfesseur) {
+        this.role = role;
+        this.email = email;
+        this.idProfesseur = idProfesseur;
+
+        // Bouton retour
+        JButton btnRetour = new JButton("⬅ Retour");
+        btnRetour.addActionListener(e -> {
+            dispose();
+            new AccueilFrame(role, email, idProfesseur).setVisible(true);
+        });
+    }
+
 
 
 
