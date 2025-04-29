@@ -7,7 +7,6 @@ import models.Professeur;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class AffecterCoursFrame extends JFrame {
     private JComboBox<Cours> comboCours;

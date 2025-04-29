@@ -14,6 +14,7 @@ public class ProfesseurDao {
 
     public static int getIdParEmail(String email) {
         int idProfesseur = -1;
+        Basedonnee bd = new Basedonnee();
         Connection con = Basedonnee.getConnection();
 
         String sql = "SELECT p.idProfesseur " +
@@ -72,22 +73,22 @@ public class ProfesseurDao {
         List<models.Professeur> profs = new ArrayList<>();
 
         String sql = """
-        SELECT p.idProfesseur, u.nom, u.prenom, u.email
-        FROM Professeur p
-        JOIN Utilisateurs u ON p.idUtilisateurs = u.idUtilisateurs
-    """;
+                    SELECT p.idProfesseur, u.nom, u.prenom, u.email
+                    FROM Professeur p
+                    JOIN Utilisateurs u ON p.idUtilisateurs = u.idUtilisateurs
+                """;
 
+        Basedonnee bd = new Basedonnee();
         try (Connection con = Basedonnee.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql);
-             ResultSet rs = pst.executeQuery()) {
+                PreparedStatement pst = con.prepareStatement(sql);
+                ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 profs.add(new models.Professeur(
                         rs.getInt("idProfesseur"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
-                        rs.getString("email")
-                ));
+                        rs.getString("email")));
             }
 
         } catch (Exception e) {
@@ -109,7 +110,5 @@ public class ProfesseurDao {
         }
         return false;
     }
-
-
 
 }
