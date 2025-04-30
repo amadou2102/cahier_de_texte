@@ -3,6 +3,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 
 public class AccueilFrame extends JFrame {
@@ -25,14 +26,23 @@ public class AccueilFrame extends JFrame {
         // ➡️ Ajouter ici la barre de menu Déconnexion
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Options");
+
+
+
         JMenuItem deconnexionItem = new JMenuItem("🚪 Déconnexion");
         deconnexionItem.addActionListener(e -> {
             dispose();
             new LoginFrame().setVisible(true);
         });
+
+
         menu.add(deconnexionItem);
         menuBar.add(menu);
         setJMenuBar(menuBar);
+        JMenu menuOptions = new JMenu();
+
+
+
        /* JLabel label = new JLabel("Bienvenue " + nomUtilisateur + " (" + role + ")");
         label.setFont(new Font("Arial", Font.BOLD, 16));
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,26 +52,43 @@ public class AccueilFrame extends JFrame {
 
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 10, 10)); */
 
+        // 👤 Profil utilisateur
+        JMenuItem itemProfil = new JMenuItem("Mon Profil");
+        itemProfil.addActionListener(e -> JOptionPane.showMessageDialog(this,
+                "Email : " + nomUtilisateur + "\nRôle : " + role,
+                "Profil", JOptionPane.INFORMATION_MESSAGE));
+        menuOptions.add(itemProfil);
 
-        /*/ Menu Bar
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Options");
+        // ❓ Aide / Support
+        JMenuItem itemAide = new JMenuItem("Aide");
+        itemAide.addActionListener(e -> JOptionPane.showMessageDialog(this,
+                "📧 Contactez le support : support@tonapp.com\n📱 WhatsApp : +221 77 123 45 67",
+                "Aide", JOptionPane.INFORMATION_MESSAGE));
+        menuOptions.add(itemAide);
 
-        JMenuItem retourItem = new JMenuItem("🏠 Retour Accueil");
-        retourItem.addActionListener(e -> {
-            dispose();
-            new AccueilFrame(role, nomUtilisateur, idProfesseur).setVisible(true);
+        // 🎨 Thème sombre/clair (bascule)
+        JCheckBoxMenuItem itemTheme = new JCheckBoxMenuItem("Thème sombre");
+        itemTheme.addActionListener(e -> {
+            boolean isDark = itemTheme.isSelected();
+            UIManager.put("control", isDark ? Color.DARK_GRAY : Color.WHITE);
+            UIManager.put("info", isDark ? Color.DARK_GRAY : Color.WHITE);
+            UIManager.put("nimbusBase", isDark ? Color.BLACK : Color.LIGHT_GRAY);
+            UIManager.put("nimbusBlueGrey", isDark ? Color.GRAY : Color.LIGHT_GRAY);
+            UIManager.put("text", isDark ? Color.WHITE : Color.BLACK);
+            SwingUtilities.updateComponentTreeUI(this);
         });
+        menuOptions.add(itemTheme);
 
-        JMenuItem deconnexionItem = new JMenuItem("🚪 Déconnexion");
-        deconnexionItem.addActionListener(e -> {
-            dispose();
-            new LoginFrame().setVisible(true);
-        });
-        menu.add(retourItem);
-        menu.add(deconnexionItem);
-        menuBar.add(menu);
-        setJMenuBar(menuBar);*/
+        //À propos
+        JMenuItem itemAbout = new JMenuItem("À propos");
+        itemAbout.addActionListener(e -> JOptionPane.showMessageDialog(this,
+                "Application Cahier de Texte\nVersion 1.0\nDéveloppé par ton nom",
+                "À propos", JOptionPane.INFORMATION_MESSAGE));
+        menuOptions.add(itemAbout);
+
+        menuBar.add(menuOptions);
+        setJMenuBar(menuBar);
+
 
         // Haut : Bienvenue
         JLabel welcomeLabel = new JLabel("Bienvenue " + nomUtilisateur + " (" + role + ")");
@@ -95,7 +122,7 @@ public class AccueilFrame extends JFrame {
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    private void addButton(JPanel panel, String text, java.awt.event.ActionListener action) {
+    private void addButton(JPanel panel, String text, ActionListener action) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 16));
         button.setBackground(new Color(0, 153, 76));
