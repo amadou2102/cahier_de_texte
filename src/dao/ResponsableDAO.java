@@ -40,7 +40,7 @@ public class ResponsableDAO {
         return idResponsable;
     }
 
-    // Ajouter un nouveau professeur
+    // Ajouter un nouveau responsable
     public static boolean ajouterResponsable(String nom, String prenom, String email, String password) {
         try (Connection con = Basedonnee.getConnection()) {
             // 1. Insérer dans Utilisateurs
@@ -72,13 +72,14 @@ public class ResponsableDAO {
     }
 
     // Lister les professeurs
+    // Lister les responsables
     public static List<Responsable> listerResponsable() {
-        List<Responsable> Resp = new ArrayList<>();
+        List<Responsable> respList = new ArrayList<>();
 
         String sql = """
-        SELECT p.idProfesseur, u.nom, u.prenom, u.email
-        FROM Professeur p
-        JOIN Utilisateurs u ON p.idUtilisateurs = u.idUtilisateurs
+        SELECT r.idResponsable, u.nom, u.prenom, u.email
+        FROM Responsable r
+        JOIN Utilisateurs u ON r.idUtilisateurs = u.idUtilisateurs
     """;
 
         try (Connection con = Basedonnee.getConnection();
@@ -86,7 +87,7 @@ public class ResponsableDAO {
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
-                Resp.add(new models.Responsable(
+                respList.add(new Responsable(
                         rs.getInt("idResponsable"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
@@ -98,15 +99,15 @@ public class ResponsableDAO {
             e.printStackTrace();
         }
 
-        return Resp;
+        return respList;
     }
 
-    // Supprimer un professeur
-    public static boolean supprimerProfesseur(int idProf) {
+    // Supprimer un responsable
+    public static boolean supprimerResponsable(int idResponsable) {
         try (Connection con = Basedonnee.getConnection()) {
-            String sql = "DELETE FROM Professeur WHERE idProfesseur = ?";
+            String sql = "DELETE FROM Responsable WHERE idResponsable = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, idProf);
+            pst.setInt(1, idResponsable);
             return pst.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,9 +115,8 @@ public class ResponsableDAO {
         return false;
     }
 
-
-
 }
+
 
 
 

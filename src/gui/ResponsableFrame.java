@@ -1,176 +1,119 @@
 package gui;
 
-import dao.ProfesseurDao;
-//import dao.ResponsableDAO;
-
-
 import dao.ResponsableDAO;
-import models.Classe;
 import models.Responsable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class ResponsableFrame extends JFrame {
-    private GestionPersonnelFrame parent;
 
-    private JTextField nomField;
-    private JTextField prenomField;
-    private JTextField emailField;
-    private JPasswordField passwordField;
+    private JTable table;
+    private DefaultTableModel model;
 
-
-    public ResponsableFrame(GestionPersonnelFrame parent) {
-        this.parent = parent;
-        setTitle("Ajouter un Responsable");
-        setSize(350, 300);
-        setLocationRelativeTo(null);
-        setLayout(new GridLayout(6, 2, 10, 10));
-
-        add(new JLabel("Nom :"));
-        nomField = new JTextField();
-        add(nomField);
-
-        add(new JLabel("Prénom :"));
-        prenomField = new JTextField();
-        add(prenomField);
-
-        add(new JLabel("Email :"));
-        emailField = new JTextField();
-        add(emailField);
-
-        add(new JLabel("Mot de passe :"));
-        passwordField = new JPasswordField();
-        add(passwordField);
-
-        JButton ajouterBtn = new JButton("Ajouter");
-        ajouterBtn.addActionListener(e -> {
-            String nom = nomField.getText().trim();
-            String prenom = prenomField.getText().trim();
-            String email = emailField.getText().trim();
-            String mdp = new String(passwordField.getPassword());
-
-            if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || mdp.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs.");
-                return;
-            }
-
-            boolean success = ResponsableDAO.ajouterResponsable(nom, prenom, email, mdp);
-            if (success) {
-                JOptionPane.showMessageDialog(this, "✅ responsable ajouté !");
-                parent.chargerPersonnel(); // Rafraîchit la liste dans la fenêtre parent
-                dispose(); // Fermer la fenêtre
-            } else {
-                JOptionPane.showMessageDialog(this, "❌ Erreur lors de l’ajout.");
-            }
-        });
-
-        add(new JLabel());
-        add(ajouterBtn);
-
-    }
-}
-/*
-        JComboBox<Responsable> comboUtilisateurs = new JComboBox<>();
-        for (Responsable r : ResponsableDAO.listerUtilisateursNonResponsables()) {
-            comboUtilisateurs.addItem(r);
-        }
-
-    }
-
-
-
-
-}
-
-
-
-   /* private JTable table;
-    private DefaultTableModel tableModel;
-    private JComboBox<Classe> classeCombo;*/
-
- /*   public ResponsableFrame() {
-        setTitle("Gestion des Responsables");
+    public ResponsableFrame() {
+        setTitle("Liste des Responsables");
         setSize(700, 400);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        // --- TABLEAU ---
-        tableModel = new DefaultTableModel(new String[]{"ID", "Nom", "Prénom", "Email"}, 0);
-        table = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
+        // Panel principal
+        JPanel panel = new JPanel(new BorderLayout());
 
-        // --- BOUTONS ---
-        JButton btnAjouter = new JButton("Ajouter");
-        btnAjouter.addActionListener(e -> ajouterResponsable());
+        // En-têtes de colonnes
+        String[] columns = {"ID", "Nom", "Prénom", "Email"};
+        model = new DefaultTableModel(columns, 0);
+        table = new JTable(model);
+        JScrollPane scroll = new JScrollPane(table);
 
+        // Boutons
+        JPanel btnPanel = new JPanel();
         JButton btnSupprimer = new JButton("Supprimer");
-        btnSupprimer.addActionListener(e -> supprimerResponsable());
+        JButton btnActualiser = new JButton("Actualiser");
+        JButton btnRetour = new JButton("Retour");
+        JButton btnAjouter = new JButton("Ajouter");
 
-        JPanel panelBoutons = new JPanel();
-        panelBoutons.add(btnAjouter);
-        panelBoutons.add(btnSupprimer);
-        add(panelBoutons, BorderLayout.SOUTH);
+        btnPanel.add(btnAjouter);
+        btnPanel.add(btnSupprimer);
+        btnPanel.add(btnActualiser);
+        btnPanel.add(btnRetour);
 
-        // --- ACTIONS ---
+        // Actions
+        btnActualiser.addActionListener(e -> chargerDonnees());
+        btnSupprimer.addActionListener(e -> supprimerSelection());
+        btnAjouter.addActionListener(e -> afficherFormulaireAjout());
+        btnRetour.addActionListener(e -> {
+            dispose(); // Ferme la fenêtre actuelle
+            new AccueilFrame(); // ← remplace ceci par ta vraie page d'accueil
+        });
 
+        // Ajouter composants
+        panel.add(scroll, BorderLayout.CENTER);
+        panel.add(btnPanel, BorderLayout.SOUTH);
 
-
-        chargerResponsables();
+        add(panel);
+        chargerDonnees();
+        setVisible(true);
     }
 
-
-
-
-
-    private void chargerResponsables() {
-        tableModel.setRowCount(0); // vider le tableau
-        List<Responsable> responsables = ResponsableDAO.listerResponsables();
+    private void chargerDonnees() {
+        model.setRowCount(0); // Effacer
+        List<Responsable> responsables = ResponsableDAO.listerResponsable();
         for (Responsable r : responsables) {
-            tableModel.addRow(new Object[]{
-                    r.getId(), r.getNom(), r.getPrenom(), r.getEmail()
-            });
+            model.addRow(new Object[]{r.getId(), r.getNom(), r.getPrenom(), r.getEmail()});
         }
     }
 
-    private void ajouterResponsable() {
-        private void ajouterResponsable() {
-            String email = JOptionPane.showInputDialog(this, "Email du responsable :");
-
-            if (email != null && !email.trim().isEmpty()) {
-                boolean success = ResponsableDAO.ajouterResponsableParEmail(email.trim());
-
-                if (success) {
-                    JOptionPane.showMessageDialog(this, "✅ Responsable ajouté avec succès.");
-                    chargerResponsables(); // Rafraîchir la table
+    private void supprimerSelection() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            int id = (int) model.getValueAt(selectedRow, 0);
+            int confirm = JOptionPane.showConfirmDialog(this, "Supprimer ce responsable ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                if (ResponsableDAO.supprimerResponsable(id)) {
+                    JOptionPane.showMessageDialog(this, "Responsable supprimé avec succès");
+                    chargerDonnees();
                 } else {
-                    JOptionPane.showMessageDialog(this, "❌ Échec : l'email n'existe pas ou est déjà utilisé.");
+                    JOptionPane.showMessageDialog(this, "Erreur lors de la suppression");
                 }
             }
-        }
-
-
-    }
-
-    private void supprimerResponsable() {
-        int ligne = table.getSelectedRow();
-        if (ligne >= 0) {
-            int id = (int) tableModel.getValueAt(ligne, 0);
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "Confirmer la suppression du responsable ?", "Confirmation", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                ResponsableDAO.supprimerResponsable(id);
-                chargerResponsables();
-            }
         } else {
-            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un responsable à supprimer.");
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner un responsable");
         }
     }
 
-  */
-//}
+    private void afficherFormulaireAjout() {
+        JTextField nomField = new JTextField(10);
+        JTextField prenomField = new JTextField(10);
+        JTextField emailField = new JTextField(15);
+        JPasswordField passField = new JPasswordField(10);
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(new JLabel("Nom :"));
+        panel.add(nomField);
+        panel.add(new JLabel("Prénom :"));
+        panel.add(prenomField);
+        panel.add(new JLabel("Email :"));
+        panel.add(emailField);
+        panel.add(new JLabel("Mot de passe :"));
+        panel.add(passField);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Ajouter un responsable", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            boolean ok = ResponsableDAO.ajouterResponsable(
+                    nomField.getText(),
+                    prenomField.getText(),
+                    emailField.getText(),
+                    new String(passField.getPassword())
+            );
+            if (ok) {
+                JOptionPane.showMessageDialog(this, "Responsable ajouté");
+                chargerDonnees();
+            } else {
+                JOptionPane.showMessageDialog(this, "Erreur lors de l'ajout");
+            }
+        }
+    }
+}
