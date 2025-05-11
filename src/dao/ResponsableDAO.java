@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import models.Professeur;
 import models.Responsable;
 import utils.Basedonnee;
 
@@ -41,7 +40,7 @@ public class ResponsableDAO {
     }
 
     // Ajouter un nouveau responsable
-    public static boolean ajouterResponsable(String nom, String prenom, String email, String password) {
+    public static boolean ajouterResponsable(String nom, String prenom, String email, String password, int idClasse) {
         try (Connection con = Basedonnee.getConnection()) {
             // 1. Insérer dans Utilisateurs
             String insertUser = "INSERT INTO Utilisateurs (nom, prenom, email,password, role) VALUES (?, ?, ?, ?, 'Professeur')";
